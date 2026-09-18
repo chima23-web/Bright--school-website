@@ -1,142 +1,120 @@
-// ===============================
-// MOBILE NAVIGATION
-// ===============================
+function calculateProductTotal(product, brand, price, quantity,deliveryFee) {
+    const total = price * quantity;
+    const productTotal = total + deliveryFee;
 
-const menuToggle = document.getElementById("menuToggle");
-const mainNav = document.getElementById("mainNav");
+    return {
+        product,
+        brand,
+        total: productTotal
+    };
+}
 
-menuToggle.addEventListener("click", () => {
-  mainNav.classList.toggle("active");
+const productList = document.querySelector(".product-List");
 
-  menuToggle.textContent =
-    mainNav.classList.contains("active") ? "✕" : "☰";
-});
-
-// Close mobile menu after clicking a link
-document.querySelectorAll(".nav a").forEach(link => {
-  link.addEventListener("click", () => {
-    mainNav.classList.remove("active");
-    menuToggle.textContent = "☰";
-  });
-});
-
-
-// ===============================
-// CURRENT YEAR
-// ===============================
-
-document.getElementById("year").textContent = new Date().getFullYear();
-
-
-// ===============================
-// ANIMATED STATISTICS
-// ===============================
-
-const counters = document.querySelectorAll(".counter");
-
-const counterObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-
-      const counter = entry.target;
-      const target = Number(counter.dataset.target);
-      let current = 0;
-
-      const increment = Math.max(1, Math.ceil(target / 80));
-
-      const updateCounter = () => {
-        current += increment;
-
-        if (current >= target) {
-          counter.textContent = target;
-          return;
-        }
-
-        counter.textContent = current;
-        requestAnimationFrame(updateCounter);
-      };
-
-      updateCounter();
-      counterObserver.unobserve(counter);
-    });
-  },
-  { threshold: 0.5 }
+const result1 = calculateProductTotal(
+    "Laptop",
+    "HP",
+    25000,
+    4,
+    1000
 );
 
-counters.forEach(counter => {
-  counterObserver.observe(counter);
-});
+productList.innerHTML += `
+    <p>${result1.product} - ${result1.brand} - ₦${result1.total}</p>
+`;
 
 
-// ===============================
-// CONTACT FORM
-// ===============================
-
-const contactForm = document.getElementById("contactForm");
-const formMessage = document.getElementById("formMessage");
-
-contactForm.addEventListener("submit", event => {
-  event.preventDefault();
-
-  const name = document.getElementById("name").value.trim();
-
-  formMessage.textContent =
-    `Thank you, ${name}! Your message has been received. Our school office will contact you shortly.`;
-
-  contactForm.reset();
-});
-
-
-// ===============================
-// BACK TO TOP BUTTON
-// ===============================
-
-const backToTop = document.getElementById("backToTop");
-
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 500) {
-    backToTop.classList.add("show");
-  } else {
-    backToTop.classList.remove("show");
-  }
-});
-
-backToTop.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-});
-
-
-// ===============================
-// SIMPLE SCROLL REVEAL
-// ===============================
-
-const revealElements = document.querySelectorAll(
-  ".academic-card, .news-card, .feature, .quick-card"
+const result2 = calculateProductTotal(
+    "Phone",
+    "iPhone",
+    500000,
+    3,
+    1000
 );
 
-const revealObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  {
-    threshold: 0.15
-  }
+productList.innerHTML += `
+    <p>${result2.product} - ${result2.brand} - ₦${result2.total}</p>
+`;
+
+
+const result3 = calculateProductTotal(
+    "Watch",
+    "Rolex",
+    100000,
+    6,
+    1000
 );
 
-revealElements.forEach(element => {
-  element.style.opacity = "0";
-  element.style.transform = "translateY(20px)";
-  element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+productList.innerHTML += `
+    <p>${result3.product} - ${result3.brand} - ₦${result3.total}</p>
+`;
+const shopButton = 
+document.querySelector(".shop-btn");
+const message = document.querySelector(".store-message");
 
-  revealObserver.observe(element);
+shopButton.addEventListener("click", function() {
+    console.log("Button was clicked ");
+    message.textContent = "Welcome to our store! Check out our latest products.";
 });
+const laptopQuantity = document.getElementById("laptop-quantity");
+
+const laptopBtn = document.getElementById("laptop-btn");
+
+const laptopResult = document.getElementById("laptop-result");
+laptopBtn.addEventListener("click", function() {
+
+    const quantity = Number(laptopQuantity.value);
+
+    const result = calculateProductTotal(
+        "Laptop",
+        "HP",
+        25000,
+        quantity,
+        1000
+    );
+
+    laptopResult.textContent =
+        `Product: ${result.product} - Brand: ${result.brand} - Total: ₦${result.total}`;
+});
+const phoneQuantity = document.getElementById("phone-quantity");
+
+const phoneBtn = document.getElementById("phone-btn");
+
+const phoneResult = document.getElementById("phone-result");
+phoneBtn.addEventListener("click", function() {
+
+    const quantity = Number(phoneQuantity.value);
+
+    const result = calculateProductTotal(
+        "Phone",
+        "iPhone",
+        450000,
+        quantity,
+        1000
+    );
+
+    phoneResult.textContent =
+        `Product: ${result.product} - Brand: ${result.brand} - Total: ₦${result.total}`;
+});
+const watchQuantity = document.getElementById("watch-quantity");
+
+const watchBtn = document.getElementById("watch-btn");
+
+const watchResult = document.getElementById("watch-result");
+watchBtn.addEventListener("click", function() {
+
+    const quantity = Number(watchQuantity.value);
+
+    const result = calculateProductTotal(
+        "Watch",
+        "Rolex",
+        150000,
+        quantity,
+        1000
+    );
+    watchResult.textContent =
+        `Product: ${result.product} - Brand: ${result.brand} - Total: ₦${result.total}`;
+});
+
+
+    
